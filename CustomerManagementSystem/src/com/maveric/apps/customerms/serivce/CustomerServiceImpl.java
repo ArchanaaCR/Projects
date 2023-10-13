@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomerServiceImpl implements ICustomerService{
-    int generatedId=0;
-    public int getGeneratedID(){
+    private int generatedId=0;
+    private int getGeneratedID(){
         return ++generatedId;
     }
 
@@ -24,13 +24,17 @@ public class CustomerServiceImpl implements ICustomerService{
         int id = getGeneratedID();
         Customer customer=null;
         //need to check for null in separate method
-        if ((firstName.length() > 2 && firstName.length() <= 10) && (lastName.length() >= 2 && lastName.length() <= 10)) {
+            vaildateFirstNameLastName(firstName, lastName);
             customer = new Customer(id, firstName, lastName);
             store.put(id, customer);
             return customer;
-        }
+    }
+    //validate input of firstname and lastName.
+    public void vaildateFirstNameLastName(String firstName, String lastName) throws InvalidInputCustomerException{
+        if (!(firstName.length() > 2 && firstName.length() <= 10 && firstName!=null)
+                && (lastName.length() >= 2 && lastName.length() <= 10 && lastName!=null)) {
             throw new InvalidInputCustomerException("Invalid input error");
-
+        }
     }
 
     @Override

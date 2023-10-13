@@ -16,38 +16,10 @@ public class CustomerTest {
     public static void main(String[] args)  {
 
         CustomerTest test= new CustomerTest();
-        test.registerCustomer();
-
-        //finding customer by id.
-        try {
-            Customer customer = customerService.findById(10);
-            System.out.println("Customer: id:" + customer.getId() + ", firstname= " + customer.getFirstName() + "" +
-                    ", lastname= " + customer.getLastName());
-        }catch (CustomerNotFoundException e){
-            System.out.println(e.getMessage());
-        }catch (InvalidIDException e){
-            System.out.println(e.getMessage());
-        }
-
-        //find customer by start letter and order by id.
-        try {
-            List<Customer> customer= customerService.findCustomersByFirstNameAscendingId("Arch");
-            if(customer!=null){
-                for(Customer cust: customer) {
-                    System.out.println("Customer: id:" + cust.getId() + ", firstname= " + cust.getFirstName() + "" +
-                            ", lastname= " + cust.getLastName());
-                }
-            }
-        }catch(InvalidInputCustomerException e){
-            System.out.println(e.getMessage());
-
-        } catch (CustomerNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
+        test.app();
     }
 
-    public void registerCustomer() {
+    public void app() {
         //registering customer.
         try {
             Customer customer = customerService.register("Archanaa", "Cr");
@@ -58,18 +30,54 @@ public class CustomerTest {
             customers.add(customer2);
             Customer customer3 = customerService.register("Archu", "Pandian");
             customers.add(customer3);
-            Customer customer4 = customerService.register("Archana", "Pandian");
+            Customer customer4 = customerService.register("Archanaa", "Pandian");
             customers.add(customer4);
 
             if (customers != null) {
                 for (Customer cust : customers) {
-                    System.out.println("Customer: id:" + cust.getId() + ", firstname= " + cust.getFirstName() + "" +
-                            ", lastname= " + cust.getLastName());
+                    /*System.out.println("Customer: id:" + cust.getId() + ", firstname= " + cust.getFirstName() + "" +
+                            ", lastname= " + cust.getLastName());*/
+                    display(cust);
                 }
             }
         } catch (InvalidInputCustomerException e) {
             System.out.println(e.getMessage());
         }
+
+        //finding customer by id
+
+        try {
+            Customer customer = customerService.findById(10);
+            /*System.out.println("Customer: id:" + customer.getId() + ", firstname= " + customer.getFirstName() + "" +
+                    ", lastname= " + customer.getLastName());*/
+            display(customer);
+        } catch (CustomerNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (InvalidIDException e) {
+            System.out.println(e.getMessage());
+        }
+
+        //find customer by start letter and order by id.
+        try {
+            List<Customer> customer = customerService.findCustomersByFirstNameAscendingId("Arch");
+            if (customer != null) {
+                for (Customer cust : customer) {
+                     /*System.out.println("Customer: id:" + customer.getId() + ", firstname= " + customer.getFirstName() + "" +
+                    ", lastname= " + customer.getLastName());*/
+                    display(cust);
+                }
+            }
+        } catch (InvalidInputCustomerException e) {
+            System.out.println(e.getMessage());
+
+        } catch (CustomerNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+    public void display(Customer cust){
+        System.out.println("Customer: id:" + cust.getId() + ", firstname= " + cust.getFirstName() + "" +
+                ", lastname= " + cust.getLastName());
     }
 
 }
